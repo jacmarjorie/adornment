@@ -134,6 +134,8 @@ public class App
 				return new AdornmentReturnType(adornedProgram, failedAdorn, failedSips, completed);
 			}
 			
+			adornedBody.add(adornedAtom);
+			
 			// if atom is and IDB predicate, has not been completed, and is not in progress,
 			//  then create new adorned rules based on the adornment of this predicate.
 			if(!adornedAtom.isEDB() && !adornedAtom.isContained(completed) && !adornedAtom.isContained(inProgress)) {
@@ -155,7 +157,6 @@ public class App
 				adornedProgram.addAll(adornreturn.program);
 			}
 			
-			adornedBody.add(adornedAtom);
 		}
 		
 		// generate the newly adorned rule and add it to the program
