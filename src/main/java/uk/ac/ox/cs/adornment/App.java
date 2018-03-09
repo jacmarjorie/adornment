@@ -90,13 +90,13 @@ public class App
 	 * in the body of the rule (SIP). Adorned atoms that have not been (or are not currently in) the adornAtom process will have a recursive call to adornedAtom
 	 * to adorn rules with this predicate in the head. Failure of an adorned rule only means that a new Sip will be tried in adornAtom call.
 	 * @param program, list of unadorned rules, used for the recursive call of adorned atom
-	 * @param head, adorned head atom that will influence adornment of body predicates
-	 * @param orderedRule, rule with body reorder to reflect the sip in question
+	 * @param adornedHead, adorned head atom that will influence adornment of body predicates
+	 * @param reorderedBody, rule with body reorder to reflect the sip in question
 	 * @param failedAdorn, list of adorned atoms that are known to have failed or are forbidden based on web service access patterns
 	 * @param failedSips, list of rules with body orderings that have produced failed adornments
 	 * @param completed, list of adorned atoms that have been completed
 	 * @param inProgress, list of adorned atoms that do not have all rule adornments generated
-	 * @return
+	 * @return AdornmentReturnType (List<Rule> program, List<AdornAtom> failedAdorn, List<AdornAtom> failedSips, List<AdornAtom> completed)
 	 * @throws Exception when an adornment of an atom is invalid (due to unequal lengths)
 	 */
 	public static AdornmentReturnType adornRule(List<Rule> program, AdornedAtom adornedHead, List<Atom> reorderedBody, List<AdornedAtom> failedAdorn, List<List<Atom>> failedSips, List<AdornedAtom> completed, List<AdornedAtom> inProgress) throws Exception {
