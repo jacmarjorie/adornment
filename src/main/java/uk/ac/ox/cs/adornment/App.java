@@ -37,15 +37,10 @@ public class App
 		Rule[] rules = program.stream().filter(rule->(rule.head.name==adornment.name)).toArray(Rule[]::new);
 		for(int i = 0; i < rules.length; i++) {
 			Boolean failed = true;
+			inProgress.add(adornment);
 			
 			List<List<Atom>> sips = rules[i].getSips(failedSips);
 			for(List<Atom> reorderedBody: sips) {
-				
-				// mark adornment as in progress to prevent a loop back call
-				// of adorned_rule(... adornment ...)
-				if(!inProgress.contains(adornment)) {
-					inProgress.add(adornment);
-				}
 				
 				// Set up the adorned head for this rule
 				AdornedAtom adornedHead = new AdornedAtom(adornment.getName(), rules[i].head.variables);
@@ -63,6 +58,7 @@ public class App
 				// break on a successful adornment
 				if(rulereturn.success) {
 					adornedProgram.addAll(rulereturn.program);
+					completed = rulereturn.completed;
 					failed = false;
 					break;
 				}
@@ -152,6 +148,8 @@ public class App
 					adornedProgram.clear();
 					return new AdornmentReturnType(adornedProgram, failedAdorn, failedSips, completed);
 				}
+				
+				completed = adornreturn.completed;
 				
 				// update program with rules from recursive call
 				adornedProgram.addAll(adornreturn.program);
